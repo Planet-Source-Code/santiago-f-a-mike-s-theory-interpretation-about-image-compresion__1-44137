@@ -1,0 +1,45 @@
+Terms of Agreement:   
+By using this article, you agree to the following terms...   
+1) You may use this article in your own programs (and may compile it into a program and distribute it in compiled format for languages that allow it) freely and with no charge.   
+2) You MAY NOT redistribute this article (for example to a web site) without written permission from the original author. Failure to do so is a violation of copyright laws.   
+3) You may link to this article from another website, but ONLY if it is not wrapped in a frame. 
+4) You will abide by any additional copyright restrictions which the author may have placed in the article or article's description.  
+Hello, If your new to compression or dont know what it is, heres a quick overview.
+Compression is when a file or a length of data is made smaller than the orginal size. The main factor in compression is repeats. the more repeats in a string or file the higher the compression.
+Example.
+"hello hello hello hello "
+this string above is 24 charecters long. And this example can be compressed down to..
+"4~hello "
+which is 8 charecters long. Compression :) (This compression is RLE (Run Length Encoding) Very basic and isnt that powerful.
+I hope your following ok :) (If theres any bad spelling in here sorry, cant spell at all!)
+
+So.. the key to compression is repeats, My idea is to take an image. 64 by 64, and run throw the image reading each 8 by 8 block, scanning the picture of blocks that are the same.
+is that bad english? hmmm heres what i mean Step 1) Get the block at X,Y (8by8)
+Step 2) Scan throw the image From X,Y to the end of the picture (8by8)
+Step 3) Compare the blocks. If the same (or 90% similar) Record its position and the block its the same to.
+Step 4) Move X,Y and repeat
+
+Better?
+Now the maths.... A Pixel is made up of 3 colours (If true colour :P) Red Green Blue (0-255,0-255,0-255) and that is 24bits.
+8 by 8 blocks.. at 24bits depth. 
+so 8x8x24 = 1536bits, Each block that we HAVE to store is 1536bits big. But storing the repeating blocks (The easyest way i can think of, If u think of a better idea email me!) is to use a header.
+The header must tell you how many blocks are repeated.. and this could be a very large number depending on the image size. so a 16bit number would be used at the beginning. Then .. each block repeated must have the X,Y
+
+X,Y is 4 bits each (64/8 = 8 = 4bits) so in total thats 8bits for a 8x8x24 block..
+
+... Now to test it?
+A completly blank sheet 64x64, 
+64/8 = 8
+there is 64 blocks in total (8*8). Now coz only 1 block is needed and the rest are repeats.. 
+1 MASTER BLOCK = 1536bits
+1 HEADER = 16bits
+63 COPYS = 8bits * 63 = 504bits
+The total is 2056bits compressed... instead of(1536*64) 98304bits.
+Compression of 
+2056 / 98304 * 100 ~ 2.0914
+100 - 2.0914 = 97.90%!
+Now ofcouse this can be changed .. because the more repeats you can get the better compression so mayb change it to compare layers instead of whole pictures (RGB)? and instead of 90%, 95% for better qual? or 50% of better compression. And ofcourse.. the compression will go down when changing the size of the picture (X,Y when saved has to be bigger) but in princable it should (crosses fingers) work... email me if you find a fault with my code or find a better way of doing things. (Vectors mayb?)
+
+:) xxx Mike xxx 
+http://www.planet-source-code.com/vb/scripts/ShowCode.asp?lngWId=1&txtCodeId=43809
+xxxMikey_Bxxx@hotmail.com
